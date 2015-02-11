@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-18T10:47:21 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="distribuicao_terefeiros" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5304083a-810c-474c-accd-ee3355cbd872">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="COMEERJ"/>
+	<queryString language="SQL">
+		<![CDATA[select count(DSC_TIPO_COMISSAO) COUNT, DSC_TIPO_COMISSAO from comeerj
+where DSC_TIPO_COMISSAO != ''
+group by DSC_TIPO_COMISSAO
+;]]>
+	</queryString>
+	<field name="COUNT" class="java.lang.Integer"/>
+	<field name="DSC_TIPO_COMISSAO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="234" splitType="Stretch">
+			<componentElement>
+				<reportElement x="70" y="30" width="400" height="150" uuid="e39fcb2b-1e33-417a-bd6a-6298bb51db22"/>
+				<fc:chart xmlns:fc="http://jaspersoft.com/fusion" xsi:schemaLocation="http://jaspersoft.com/fusion http://jaspersoft.com/schema/fusion.xsd" type="Pie">
+					<fc:chartProperty name="caption">
+						<fc:propertyExpression><![CDATA[TAREFEIROS]]></fc:propertyExpression>
+					</fc:chartProperty>
+					<fc:chartProperty name="subCaption">
+						<fc:propertyExpression><![CDATA[DISTRIBUIÇÃO]]></fc:propertyExpression>
+					</fc:chartProperty>
+					<fc:chartDataset>
+						<dataset>
+							<incrementWhenExpression><![CDATA[$F{COUNT}]]></incrementWhenExpression>
+						</dataset>
+						<fc:item>
+							<fc:labelExpression><![CDATA["Change Me"]]></fc:labelExpression>
+							<fc:valueExpression><![CDATA[new Double(0)]]></fc:valueExpression>
+						</fc:item>
+					</fc:chartDataset>
+				</fc:chart>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-17T18:35:48 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CRACHA_ORIGINAL" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fe144bf-9539-4f71-95d3-b236125a8155">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="COMEERJ"/>
+	<queryString language="SQL">
+		<![CDATA[select c.NOM_CRACHA as NOME_CRACHA, e.nome as EQUIPE , c.NOM_COMPLETO as NOME_COMPLETO, 
+c.NOM_IE_PARTICIPA as CASA_ESPIRITA, a.nome as ALOJAMENTO 
+from comeerj c, dados_equipe de, equipe e, alojamento a, alojamento_membros am
+where de.dados = c.COD_FICHA_INSCRICAO_COMEERJ_ID
+and de.equipe = e.idequipe
+and am.membro = c.COD_FICHA_INSCRICAO_COMEERJ_ID
+and am.alojamento = a.idalojamento;]]>
+	</queryString>
+	<field name="NOME_CRACHA" class="java.lang.String"/>
+	<field name="EQUIPE" class="java.lang.String"/>
+	<field name="NOME_COMPLETO" class="java.lang.String"/>
+	<field name="CASA_ESPIRITA" class="java.lang.String"/>
+	<field name="ALOJAMENTO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="258" splitType="Stretch">
+			<rectangle>
+				<reportElement x="5" y="10" width="341" height="227" uuid="d89cb176-db6e-4516-8a50-0df0adc7067d">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+			<image>
+				<reportElement x="5" y="10" width="341" height="227" uuid="1c869157-f4af-492f-a113-ab4e28051786"/>
+				<imageExpression><![CDATA["header_cinza.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="10" y="22" width="120" height="49" uuid="75d2c47a-dbb4-4183-a496-c6c5c6944010"/>
+				<imageExpression><![CDATA["logo.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement mode="Transparent" x="130" y="22" width="210" height="39" backcolor="#FFFFFF" uuid="b99f8984-f988-40fd-95ce-d1296ee219ef"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME_CRACHA}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="71" width="330" height="30" uuid="d0a9a58e-c8f2-4567-9ab3-6af14c5cf5dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Polo X - " + $F{EQUIPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="120" width="330" height="19" uuid="888e5c5b-2ebc-4626-b37f-a8e0f87aae95"/>
+				<textFieldExpression><![CDATA[$F{NOME_COMPLETO}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="101" width="100" height="19" uuid="7d5af013-1c8e-48ab-a173-2bca8ac11759"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="160" width="330" height="20" uuid="2e28140d-c0b0-49eb-a6f9-80964038a101"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CASA_ESPIRITA}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="140" width="100" height="20" uuid="d1361974-72a6-4dc2-8eb2-f6e09075d55e"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<text><![CDATA[Casa Espírita:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="200" width="330" height="20" uuid="0593d1a6-9d6e-40cf-9e6e-ae181b256fd3"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ALOJAMENTO}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="180" width="100" height="20" uuid="e6273e75-e927-4231-9201-df9a20be925b"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<text><![CDATA[Alojamento:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

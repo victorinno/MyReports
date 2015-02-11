@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-01-18T10:47:51 -->
+<!-- 2015-01-15T20:00:06 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Assinatura" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="09152df2-1e71-4eaf-9b10-89bf9343c4cd">
-	<property name="template.type" value="columnar"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="COMEERJ"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
@@ -15,36 +14,24 @@
 		</conditionalStyle>
 	</style>
 	<queryString language="SQL">
-		<![CDATA[select  c.NOM_COMPLETO, c.NOM_IE_PARTICIPA, CASE
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) < 12 THEN 'Pequenos Companheiros'
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE())  BETWEEN 12 and 13 THEN 'Polem'
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 13 and 14 THEN 'Sementes'
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 15 and 16 THEN 'Flores'
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 17 and 18 THEN 'Colheita'
-		WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 18 and 26 THEN 'Tarefeiros do Bem'
-		WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) > 18 
-			and (c.DSC_TIPO_PARTICIPACAO = 'Comissao' or  c.DSC_TIPO_PARTICIPACAO = 'Pequenos Companheiros') 
-			THEN 'Tarefeiro'
-      END as GRUPO  from  comeerj c, alojamento a, alojamento_membros am
-	where am.alojamento = a.idalojamento
-	and am.membro = c.COD_FICHA_INSCRICAO_COMEERJ_ID
-	and c.DSC_TIPO_PARTICIPACAO = 'Confraternista'
-	order by GRUPO, c.NOM_COMPLETO;]]>
+		<![CDATA[select e.nome as nome , c.NOM_COMPLETO as NOME_COMPLETO
+from dados_equipe de, comeerj c, equipe e
+where de.equipe = e.idequipe
+and de.dados = c.COD_FICHA_INSCRICAO_COMEERJ_ID
+order by 1,2;
+]]>
 	</queryString>
-	<field name="NOM_COMPLETO" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="GRUPO" class="java.lang.String"/>
-	<field name="NOM_IE_PARTICIPA" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="NOME_COMPLETO" class="java.lang.String"/>
 	<group name="Group1" isStartNewPage="true">
-		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{nome}]]></groupExpression>
 		<groupHeader>
 			<band height="31">
 				<frame borderSplitType="DrawBorders">
 					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" printWhenGroupChanges="Group1" forecolor="#B89F7D" backcolor="#9DB1B8" uuid="c03ea340-2e07-4ad7-8207-2b7fb3aac0e1"/>
 					<textField>
 						<reportElement x="0" y="0" width="380" height="24" printWhenGroupChanges="Group1" uuid="c63b90ac-3005-461e-982a-930b98767dcc"/>
-						<textFieldExpression><![CDATA[$F{GRUPO}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
@@ -63,7 +50,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="26" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Lista de Assinaturas]]></text>
+				<text><![CDATA[Tarefeiros Por Equipe]]></text>
 			</staticText>
 			<image>
 				<reportElement x="4" y="30" width="126" height="50" uuid="a97d7831-23ea-4be2-b271-8dc716e2128d"/>
@@ -75,31 +62,13 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="37" splitType="Immediate">
-			<staticText>
-				<reportElement x="4" y="2" width="156" height="30" uuid="62bda42e-7e6f-445b-9b2c-d6e69780831b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Nome]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="160" y="3" width="120" height="30" uuid="7a5e7ff9-a244-49b9-9720-da8a66edd547"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Casa Espírita]]></text>
-			</staticText>
-		</band>
+		<band height="31" splitType="Immediate"/>
 	</columnHeader>
 	<detail>
-		<band height="41" splitType="Stretch">
+		<band height="53" splitType="Stretch">
 			<textField>
-				<reportElement x="-1" y="10" width="161" height="30" uuid="f22f0b24-268c-4cef-9f0b-730e6aeaa085"/>
-				<textFieldExpression><![CDATA[$F{NOM_COMPLETO}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="280" y="40" width="274" height="1" uuid="fc6772b6-e4ce-42e0-b681-a79715276799"/>
-			</line>
-			<textField>
-				<reportElement x="160" y="10" width="120" height="30" uuid="5da2647d-a233-4ed5-ac7e-eda05da91f74"/>
-				<textFieldExpression><![CDATA[$F{NOM_IE_PARTICIPA}.toUpperCase()]]></textFieldExpression>
+				<reportElement x="0" y="10" width="554" height="30" uuid="90afb345-52fa-4e1a-8761-993a5d6fdace"/>
+				<textFieldExpression><![CDATA[$F{NOME_COMPLETO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

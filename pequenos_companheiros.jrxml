@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-01-17T18:40:16 -->
+<!-- 2015-01-15T20:21:23 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Assinatura" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="09152df2-1e71-4eaf-9b10-89bf9343c4cd">
 	<property name="template.type" value="columnar"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="COMEERJ"/>
@@ -15,17 +15,15 @@
 		</conditionalStyle>
 	</style>
 	<queryString language="SQL">
-		<![CDATA[select  c.NOM_COMPLETO, a.nome AS ALOJAMENTO,   CASE
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE())  BETWEEN 12 and 13 THEN 'Polem'
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 13 and 14 THEN 'Sementes'
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 15 and 16 THEN 'Flores'
-        WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 17 and 18 THEN 'Colheita'
-		WHEN TIMESTAMPDIFF(YEAR,  c.DAT_NASCIMENTO,CURDATE()) BETWEEN 18 and 26 THEN 'Tarefeiros do Bem'
-    END as GRUPO  from  comeerj c, alojamento a, alojamento_membros am
-	where am.alojamento = a.idalojamento
-	and am.membro = c.COD_FICHA_INSCRICAO_COMEERJ_ID
-	and c.DSC_TIPO_PARTICIPACAO = 'Confraternista'
-	order by GRUPO, c.NOM_COMPLETO;]]>
+		<![CDATA[SELECT te.nome GRUPO, c.NOM_COMPLETO, a.nome ALOJAMENTO
+FROM turma_alunos ta, comeerj c, turma_evangelizacao te, alojamento_membros am, alojamento a
+where turma = 6
+and ta.aluno = c.COD_FICHA_INSCRICAO_COMEERJ_ID
+and ta.turma = te.idturma_evangelizacao
+and am.alojamento = a.idalojamento
+and am.membro = c.COD_FICHA_INSCRICAO_COMEERJ_ID
+order by 2;
+]]>
 	</queryString>
 	<field name="NOM_COMPLETO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -35,11 +33,11 @@
 	<group name="Group1" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{GRUPO}]]></groupExpression>
 		<groupHeader>
-			<band height="31">
-				<frame>
-					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#9DB1B8" uuid="c03ea340-2e07-4ad7-8207-2b7fb3aac0e1"/>
+			<band height="42">
+				<frame borderSplitType="DrawBorders">
+					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" printWhenGroupChanges="Group1" forecolor="#B89F7D" backcolor="#9DB1B8" uuid="c03ea340-2e07-4ad7-8207-2b7fb3aac0e1"/>
 					<textField>
-						<reportElement x="0" y="0" width="100" height="24" uuid="c63b90ac-3005-461e-982a-930b98767dcc"/>
+						<reportElement x="0" y="1" width="380" height="19" printWhenGroupChanges="Group1" uuid="c63b90ac-3005-461e-982a-930b98767dcc"/>
 						<textFieldExpression><![CDATA[$F{GRUPO}]]></textFieldExpression>
 					</textField>
 				</frame>
@@ -59,7 +57,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="26" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Confraternistas]]></text>
+				<text><![CDATA[Pequenos Companheiros]]></text>
 			</staticText>
 			<image>
 				<reportElement x="4" y="30" width="126" height="50" uuid="a97d7831-23ea-4be2-b271-8dc716e2128d"/>
@@ -71,68 +69,18 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="33" splitType="Stretch">
-			<staticText>
-				<reportElement x="230" y="0" width="133" height="30" uuid="9d72d6dc-ae64-4f91-97a7-b4052e0518c8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[ALOJAMENTO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="0" width="230" height="30" uuid="82ce5475-4cab-4ce0-98e4-d21138141a61"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[NOME]]></text>
-			</staticText>
-		</band>
+		<band height="42" splitType="Immediate"/>
 	</columnHeader>
 	<detail>
-		<band height="61" splitType="Stretch">
+		<band height="53" splitType="Stretch">
 			<textField>
-				<reportElement x="-1" y="10" width="231" height="30" uuid="f22f0b24-268c-4cef-9f0b-730e6aeaa085"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="-1" y="10" width="282" height="30" uuid="f22f0b24-268c-4cef-9f0b-730e6aeaa085"/>
 				<textFieldExpression><![CDATA[$F{NOM_COMPLETO}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="230" y="10" width="133" height="30" uuid="a35b1844-cc8b-44b6-a98b-d84c5139db0a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="281" y="10" width="273" height="30" uuid="5da2647d-a233-4ed5-ac7e-eda05da91f74"/>
 				<textFieldExpression><![CDATA[$F{ALOJAMENTO}]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement x="439" y="6" width="20" height="20" uuid="c6993166-7aa7-41c4-be62-43f8cacf546b"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="469" y="6" width="20" height="20" uuid="4d666c5e-cab3-47d2-9b5b-ac47ca7a3ca6"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="499" y="6" width="20" height="20" uuid="ac970d42-757f-49a7-8769-1c50bca24d8a"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="529" y="6" width="20" height="20" uuid="aac8c843-ccce-46c5-8ec8-7a6eaf75160f"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="439" y="36" width="20" height="20" uuid="2f9e75ae-eaf2-4809-8df9-01c18bd5b062"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="469" y="36" width="20" height="20" uuid="4071b74f-c45b-47fc-a049-296c04df6212"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="499" y="36" width="20" height="20" uuid="2ff5762b-4a9b-4c7a-a73a-5ed1e6826b63"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="529" y="36" width="20" height="20" uuid="2a65b7e7-aa75-4671-ad6d-1551cd1d0c45"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="369" y="6" width="66" height="20" uuid="6ca7d169-af61-43d6-9c46-78e68945e73e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[MANHÃ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="369" y="36" width="66" height="20" uuid="3f204d62-f943-40a1-bd26-23a0b1a35337"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[TARDE]]></text>
-			</staticText>
-			<line>
-				<reportElement x="4" y="60" width="545" height="1" uuid="3aff3f3c-236e-4f92-90c5-1fef048fda50"/>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>
